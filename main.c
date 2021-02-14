@@ -9,10 +9,12 @@ void print_version(void) {
 
 void print_help(void) {
     printf(
+        "%s\n\n"
         "usage: wifi_password [options]\n\n"
         "arguments:\n"
         "-h, --help            show this help message and exit\n"
-        "-v, --version         show version number and exit\n"
+        "-v, --version         show version number and exit\n",
+        PROJECT_DESCRIPTION
     );
 }
 
