@@ -7,6 +7,15 @@ void print_version(void) {
     printf("wifi_password %s\n", PROJECT_VERSION);
 }
 
+void print_help(void) {
+    printf(
+        "usage: wifi_password [options]\n\n"
+        "arguments:\n"
+        "-h, --help            show this help message and exit\n"
+        "-v, --version         show version number and exit\n"
+    );
+}
+
 int main(int argc, char** argv) {
      static struct option long_options[] = {
         {"version", no_argument, NULL, 'v'},
@@ -17,6 +26,7 @@ int main(int argc, char** argv) {
     while ((opt_char = getopt_long(argc, argv, "hv", long_options, &option_index)) != -1) {
         switch (opt_char) {
             case 'h':
+                print_help();
                 exit(0);
             case 'v':
                 print_version();
