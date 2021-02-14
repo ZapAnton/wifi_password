@@ -5,9 +5,19 @@ project(
     DESCRIPTION "Quickly fetch WIFI password"
     LANGUAGES C
 )
+configure_file(
+    ${CMAKE_CURRENT_LIST_DIR}/in/project_info.h.in
+    ${CMAKE_CURRENT_LIST_DIR}/include_config/project_info.h
+)
 add_executable(
     wifi_password
+    ${CMAKE_CURRENT_LIST_DIR}/include_config/project_info.h
     ${CMAKE_CURRENT_LIST_DIR}/main.c
+)
+target_include_directories(
+    wifi_password
+    PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/include_config
 )
 target_compile_features(
     wifi_password
