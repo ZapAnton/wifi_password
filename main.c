@@ -14,6 +14,24 @@ void print_help(void) {
            PROJECT_DESCRIPTION);
 }
 
+void fetch_wifi(void) {
+    FILE *nmcli_process = popen(
+        "nmcli -t -f active,ssid dev wifi | grep yes | sed 's/yes://'", "r");
+    if (nmcli_process == NULL) {
+        fprintf(stderr, "Failed to open nmcli process");
+        exit(1);
+    }
+    char ssid[40] = {0};
+    const char *const fgets_result = fgets(ssid, 40, nmcli_process);
+    // TODO: Remove the newline from fgets
+    if (fgets_result == NULL) {
+        fprintf(stderr, "Failed to read from nmcli process");
+        exit(1);
+    }
+    puts(ssid);
+    pclose(nmcli_process);
+}
+
 int main(int argc, char **argv) {
     static struct option long_options[] = {
         {"version", no_argument, NULL, 'v'},
@@ -32,5 +50,6 @@ int main(int argc, char **argv) {
             exit(0);
         }
     }
+    fetch_wifi();
     return 0;
 }
