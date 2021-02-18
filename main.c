@@ -21,14 +21,14 @@ void get_ssid(char *ssid_str) {
     FILE *nmcli_process = popen(
         "nmcli -t -f active,ssid dev wifi | grep yes | sed 's/yes://'", "r");
     if (nmcli_process == NULL) {
-        fprintf(stderr, "Failed to open nmcli process");
+        fprintf(stderr, "Failed to open nmcli process\n");
         exit(1);
     }
     const char *const fgets_result =
         fgets(ssid_str, MAX_SSID_LENGTH, nmcli_process);
     // TODO: Remove the newline from fgets
     if (fgets_result == NULL) {
-        fprintf(stderr, "Failed to read from nmcli process");
+        fprintf(stderr, "Failed to read from nmcli process\n");
         exit(1);
     }
     pclose(nmcli_process);
@@ -41,14 +41,14 @@ void get_password(char *password_str, const char *const ssid) {
             ssid);
     FILE *nmcli_process = popen(nmcli_command, "r");
     if (nmcli_process == NULL) {
-        fprintf(stderr, "Failed to open nmcli process");
+        fprintf(stderr, "Failed to open nmcli process\n");
         exit(1);
     }
     const char *const fgets_result =
         fgets(password_str, MAX_PASSWORD_LENGTH, nmcli_process);
     // TODO: Remove the newline from fgets
     if (fgets_result == NULL) {
-        fprintf(stderr, "Failed to read from nmcli process");
+        fprintf(stderr, "Failed to read from nmcli process\n");
         exit(1);
     }
     pclose(nmcli_process);
@@ -58,7 +58,7 @@ void fetch_wifi(void) {
     char ssid[MAX_SSID_LENGTH] = {0};
     get_ssid(ssid);
     if (ssid[0] == '\0') {
-        fprintf(stderr, "No active ssid found. Aborting");
+        fprintf(stderr, "No active ssid found. Aborting\n");
         exit(1);
     }
     char password[MAX_PASSWORD_LENGTH] = {0};
